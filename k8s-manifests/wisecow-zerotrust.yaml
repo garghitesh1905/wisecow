@@ -1,0 +1,47 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: wisecow-zero-trust
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: wisecow
+  file:
+    action: Audit  # Set to audit mode
+    matchPaths:
+      # Files that are allowed
+      - path: /usr/local/bin/wisecow.sh
+        action: Allow
+      - path: /usr/bin/cowsay
+        action: Allow
+      - path: /usr/bin/fortune
+        action: Allow
+      # Files that are restricted
+      - path: /etc/*
+        action: Block
+      - path: /root/*
+        action: Block
+      - path: /tmp/secret/*
+        action: Block
+      - path: /var/log/*
+        action: Block
+  process:
+    action: Audit
+    matchPaths:
+      # Processes allowed to run
+      - path: /usr/local/bin/wisecow.sh
+        action: Allow
+      - path: /usr/bin/cowsay
+        action: Allow
+      - path: /usr/bin/fortune
+        action: Allow
+      # Processes that are blocked
+      - path: /bin/bash
+        action: Block
+      - path: /usr/bin/python3
+        action: Block
+      - path: /usr/bin/wget
+        action: Block
+      - path: /usr/bin/curl
+        action: Block
