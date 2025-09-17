@@ -1,10 +1,9 @@
 FROM ubuntu:20.04
 
-RUN apt-get update && apt-get install -y fortune-mod cowsay netcat
+RUN apt-get update && apt-get install -y fortune-mod cowsay netcat-openbsd
 
 COPY wisecow.sh /usr/local/bin/wisecow.sh
-RUN chmod +x /usr/local/bin/wisecow.sh
 
-EXPOSE 4499
+RUN chmod +x /usr/local/bin/wisecow.sh
 
 CMD ["/usr/local/bin/wisecow.sh"]
