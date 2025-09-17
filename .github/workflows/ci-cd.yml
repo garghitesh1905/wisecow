@@ -40,5 +40,5 @@ jobs:
       run: kind load docker-image garghitesh1905/wisecow:latest
 
     - name: Apply Kubernetes manifests
-      run: kubectl apply -f k8s-manifests/
-
+      run: |
+          kubectl apply -f k8s-manifests/ --ignore-not-found
